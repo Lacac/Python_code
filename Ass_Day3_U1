@@ -1,0 +1,24 @@
+import re
+from typing import List
+import pyinputplus as pyip
+
+numberList = pyip.inputInt('Enter the number of element in list: ', min = 0)
+listOfNumber = []
+for i in range(numberList):
+    listOfNumber.append(input('Enter the element ' + str(i)))
+
+
+for i in range(numberList):
+    mess = listOfNumber[i]
+    digit_mess = mess.replace('-','')
+    creditNumberRegex = re.compile(r'^[4-6]\d{3}-?(\d{4}-?){2}\d{4}')
+    check = creditNumberRegex.match(mess)
+    if check != None and len(check.group()) == len(mess):      # full mess
+        consecutiveRegex = re.compile(r'\d+(?=(\d)\1\1\1)')    
+        consecutiveCheck = consecutiveRegex.search(digit_mess)
+        if consecutiveCheck == None:
+            print(mess + ': Valid')
+        else : 
+            print(mess + ' : Invalid 2')
+    else: 
+        print(mess + ' : Invalid 1')
